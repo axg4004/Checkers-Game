@@ -15,7 +15,7 @@ import spark.ModelAndView;
  *
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
-public class TemplateEngineTester {
+public class TemplateEngineTest {
 
   /** Holds the View-Model map from the Spark ModelAndView object. */
   private Object model;
@@ -33,8 +33,8 @@ public class TemplateEngineTester {
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         final ModelAndView modelAndView = invocation.getArgument(0);
-        TemplateEngineTester.this.model = modelAndView.getModel();
-        TemplateEngineTester.this.viewName = modelAndView.getViewName();
+        TemplateEngineTest.this.model = modelAndView.getModel();
+        TemplateEngineTest.this.viewName = modelAndView.getViewName();
         // the return value is not of interest
         return null;
       }

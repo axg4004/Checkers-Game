@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+<html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>${title} | Web Checkers</title>
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/game.css">
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/game.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script>
   window.gameState = {
@@ -14,6 +15,24 @@
     "whitePlayer" : "${whitePlayer.name}",
     "activeColor" : "${activeColor}"
   };
+  var winner = "${winnerName}";
+  window.addEventListener("load", function() {
+    if(winner === "${currentPlayer.name}") {
+      // This player has won
+      alert("Congratulations! You have won the game!");
+      window.setTimeout(function() {
+        window.location = "/";
+      }, 3000);
+    } else if(winner === "NO_WINNER") {
+      // Nobody has won yet
+    } else {
+      // The other player has won
+      alert("Darn! You lost the game!");
+      window.setTimeout(function() {
+          window.location = "/";
+      }, 3000);
+    }
+  });
   </script>
 </head>
 <body>
@@ -32,7 +51,17 @@
     <div class="body">
       
       <p id="help_text"></p>
-      
+
+      <#if async??>
+      <p>This game is running in <em>asynchronous</em> mode.</p>
+      <#else>
+      <p>This game is running in <em>synchronous</em> mode.</p>
+      <form action="/startAsync" method="POST">
+        Click <input type="submit" value="here" /> to transition all your games
+        to asynchronous mode.
+      </form>
+      </#if>
+
       <div>
         <div id="game-controls">
         
@@ -46,7 +75,15 @@
               <!-- keep here for client-side messages -->
             </div>
             </#if>
-            
+            <#if asyncRequest??>
+              <form action="/confirmAsync" method="POST">
+                <input type="submit" value="Yes" />
+              </form>
+              <form action="/denyAsync" method="POST">
+                <input type="submit" value="No" />
+              </form>
+            </#if>
+
             <div>
               <table data-color='RED'>
                 <tr>
@@ -81,11 +118,11 @@
                     class="Space"
                     </#if>
                     >
-                <#if space.piece??>
+                <#if space.pieceView??>
                   <div class="Piece"
-                       id="piece-${row.index}-${space.cellIdx}"
-                       data-type="${space.piece.type}"
-                       data-color="${space.piece.color}">
+                       id="pieceView-${row.index}-${space.cellIdx}"
+                       data-type="${space.pieceView.type}"
+                       data-color="${space.pieceView.color}">
                   </div>
                 </#if>
                 </td>
@@ -100,7 +137,7 @@
     </div>
   </div>
 
-  <audio id="audio" src="http://www.soundjay.com/button/beep-07.mp3" autostart="false" ></audio>
+  <audio id="audio" src="http://www.soundjay.com/button/beep-07.mp3"></audio>
   
   <script data-main="/js/game/index" src="/js/require.js"></script>
   
