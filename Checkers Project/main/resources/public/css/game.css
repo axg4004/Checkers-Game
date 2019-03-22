@@ -1,0 +1,145 @@
+/*
+ * Game view styles
+ */
+ 
+/* animation definitions */
+@keyframes gray-fades {
+     0% {background-color: lightgray;}
+    50% {background-color: white;}
+   100% {background-color: lightgray;}
+}
+@keyframes background-fades {
+     0% {background-color: rgba(255, 192, 203, 0.4);}
+    50% {background-color: rgba(255, 192, 203, 0.7);}
+   100% {background-color: rgba(255, 192, 203, 0.4);}
+}
+
+/*
+* Generic Game Controls style
+*/
+div#game-controls {
+  /* Using a FlexBox container provides simple side-by-side,
+   * equi-height display of the two fieldset elements children.
+   */
+  display: flex;
+}
+div#game-controls fieldset {
+  flex: 1; /* same width */
+  margin: 1em;
+  border-radius: 5px;
+  border: 2px solid #6ECCFF;
+}
+div#game-controls fieldset legend {
+  padding: 0 0.75em 0 0.75em;
+  color: #6ECCFF;
+  font-size: larger;
+}
+
+/*
+* Game Info styles
+*/
+fieldset#game-info table {
+  width: 40%;
+  float: left;
+  border-collapse: collapse;
+}
+fieldset#game-info table.isMyTurn {
+  animation: gray-fades;
+  animation-duration: 3s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  border-radius: 7px;
+}
+fieldset#game-info table td {
+  width: 50%;
+}
+fieldset#game-info table td.name {
+  font-size: larger;
+}
+
+/*
+* Game Controls styles
+*/
+fieldset#game-toolbar button {
+  padding: 9px;
+  margin-right: 0.25em;
+  font-size: larger;
+  cursor: pointer;
+  background-color: #CAECFF;
+  border-color: #6ECCFF;
+  border-radius: 7px;
+}
+fieldset#game-toolbar button:disabled {
+  background-color: lightgray;
+  border-color: darkgray;
+  cursor: default;
+}
+
+/*
+* Game board styles
+*/
+div.game-board {
+  clear: both;
+  width: 100%;
+  text-align: center;
+}
+table#game-board {
+  width: 690px;
+  height: 690px;
+  border-collapse: collapse;
+  background-image: url("../img/chess_board.svg");
+  background-repeat: no-repeat;
+}
+table#game-board > tbody {
+  width: 680px;
+  height: 680px;
+  display: block;
+  padding: 5px;
+}
+table#game-board tr {
+  height: 85px;
+}
+table#game-board td {
+  width: 85px;
+}
+table#game-board td > div {
+  width: 80px;
+  height: 75px;
+  background-repeat: no-repeat;
+  background-size: 80px 75px;
+}
+table#game-board td > div[data-type="SINGLE"][data-color="RED"] {
+  background-image: url("../img/single-piece-red.svg");
+}
+table#game-board td > div[data-type="KING"][data-color="RED"] {
+  background-image: url("../img/king-piece-red.svg");
+}
+table#game-board td > div[data-type="SINGLE"][data-color="WHITE"] {
+  background-image: url("../img/single-piece-white.svg");
+}
+table#game-board td > div[data-type="KING"][data-color="WHITE"] {
+  background-image: url("../img/king-piece-white.svg");
+}
+table#game-board td.pending {
+  animation: background-fades;
+  animation-duration: 3s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+table#game-board td.valid {
+  background-color: rgba(0, 255, 0, 0.4);
+}
+
+/* Prevent the text contents of draggable elements from being selectable. */
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
+.Space.hover {
+  background-color: rgba(255, 192, 203, 0.4);
+}
